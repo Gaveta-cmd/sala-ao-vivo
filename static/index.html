@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sala ao Vivo</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <!-- Lobby -->
+  <main id="lobby" class="lobby">
+    <div class="lobby-card">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <h1>Sala ao Vivo</h1>
+      </div>
+      <p class="lobby-sub">Converse por voz, mande mensagens e compartilhe sua tela direto do navegador.</p>
+
+      <form id="join-form" class="join-form" autocomplete="off">
+        <label for="name-input">Seu nome</label>
+        <input id="name-input" maxlength="32" placeholder="Como quer ser chamado?" required>
+
+        <label for="room-input">Código da sala <span class="muted">(deixe vazio para criar uma nova)</span></label>
+        <input id="room-input" maxlength="40" placeholder="ex.: k3f9-a2bq">
+
+        <button type="submit" class="btn btn-primary" id="join-btn">Entrar</button>
+      </form>
+      <p id="lobby-error" class="lobby-error" role="alert"></p>
+    </div>
+  </main>
+
+  <!-- Sala -->
+  <div id="room" class="room" hidden>
+    <aside class="sidebar">
+      <header class="sidebar-head">
+        <span class="brand-mark small" aria-hidden="true"></span>
+        <div>
+          <div class="room-label">Sala</div>
+          <div class="room-code" id="room-code"></div>
+        </div>
+      </header>
+      <div class="section-title">Participantes <span id="peer-count" class="count"></span></div>
+      <ul id="peer-list" class="peer-list"></ul>
+    </aside>
+
+    <section class="stage">
+      <div id="tiles" class="tiles"></div>
+      <div id="stage-empty" class="stage-empty">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v11H3z M8 20h8 M12 16v4" /></svg>
+        <p>Ninguém está compartilhando a tela.</p>
+        <p class="muted">Clique em <strong>Compartilhar tela</strong> na barra abaixo para começar.</p>
+      </div>
+
+      <nav class="controls" aria-label="Controles da chamada">
+        <button id="mic-btn" class="ctrl" title="Ativar microfone" aria-pressed="false">
+          <svg class="ico-on" viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z M5 11a7 7 0 0 0 14 0 M12 18v3" /></svg>
+          <svg class="ico-off" viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z M5 11a7 7 0 0 0 14 0 M12 18v3 M3 3l18 18" /></svg>
+          <span>Microfone</span>
+        </button>
+        <button id="share-btn" class="ctrl" title="Compartilhar tela" aria-pressed="false">
+          <svg viewBox="0 0 24 24"><path d="M3 5h18v11H3z M8 20h8 M12 16v4 M12 13V8 M9.5 10.5 12 8l2.5 2.5" /></svg>
+          <span>Compartilhar tela</span>
+        </button>
+        <button id="link-btn" class="ctrl" title="Copiar link de convite">
+          <svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1 M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" /></svg>
+          <span>Convidar</span>
+        </button>
+        <button id="chat-toggle" class="ctrl only-mobile" title="Abrir chat">
+          <svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z" /></svg>
+          <span>Chat</span>
+        </button>
+        <button id="leave-btn" class="ctrl ctrl-danger" title="Sair da sala">
+          <svg viewBox="0 0 24 24"><path d="M15 4h4v16h-4 M10 8l-4 4 4 4 M6 12h10" /></svg>
+          <span>Sair</span>
+        </button>
+      </nav>
+    </section>
+
+    <aside id="chat" class="chat">
+      <header class="chat-head">
+        <span>Chat</span>
+        <button id="chat-close" class="icon-btn only-mobile" aria-label="Fechar chat">✕</button>
+      </header>
+      <ol id="messages" class="messages" aria-live="polite"></ol>
+      <form id="chat-form" class="chat-form" autocomplete="off">
+        <input id="chat-input" maxlength="2000" placeholder="Mensagem…" aria-label="Mensagem">
+        <button class="btn btn-primary" type="submit">Enviar</button>
+      </form>
+    </aside>
+  </div>
+
+  <div id="audio-sink" hidden></div>
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
